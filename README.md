@@ -1,2 +1,1 @@
-# PI_ECommerce1.4
-# PI_ECommerce1.5
+# PI_ECommerce1.6
