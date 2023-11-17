@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="styleLandingPage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <script async src="loja.js"></script>
+    <script>
+        function confirmLogout() {
+            if (confirm("Deseja realmente sair?")) {
+                // Redirecionar para a página de logout ou realizar outras ações de logout aqui
+                window.location.href = '/logout'; // Substitua pelo URL de logout real
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">
+                <i class="fa-solid fa-store"></i>
+            </div>
+
+            <ul>
+                <li><a href="/carrinhoClienteNaoLogado"><img src="images/icon-cart.svg"></a></li>
+                <li>
+                    <a th:href="${session.loggedInUser} ? '/paginaOpcoesCliente' : '/paginaLoginCliente'">
+                        <span th:if="${session.loggedInUser}">Logado como <span th:text="${session.loggedInUser}"></span></span>
+                        <span th:unless="${session.loggedInUser}">Login</span>
+                    </a>
+                    <button id="sair" th:if="${session.loggedInUser}" onclick="confirmLogout()">Sair</button>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <div class="div-text">
+                <span>PROMOÇÃO DO DIA</span>
+                <h3>TÊNIS NIKE AIR FORCE 1 07 SPACE JAM MASCULINO</h3>
+                <h1>PODE SER TODO SEU!</h1>
+                <p>Clássico e atemporal, o tênis Nike Air Force 1´07 é um modelo que nunca sai de moda!</p>
+                <!--<a href="#" class="btn">buy now</a>-->
+            </div>
+
+            <div class="div-img">
+                <img id="big-img" src="images/Tenis-Nike-Air-Force-1-07-x-Space-Jam-Masculino-Branco.jpg" alt="">
+            </div>
+        </div>
+        <section class="container normal-section">
+            <h1>ESTOQUE NOVOS</h1>
+            <div class="Container-roupas">
+                <div class="roupa" th:each="produto : ${produtos}">
+                    <img th:src="${produto.imagemPrincipal}" alt="" class="product-image">
+                    <p class="product-title" th:text="${produto.nome}"></p>
+                    <h5 style="display: inline-block;">R$</h5>
+                    <h5 class="product-price" style="display: inline-block;" th:text="${produto.valor}"></h5>
+
+                    <ion-icon name="cart-outline"></ion-icon>
+                    <td>
+                        <form th:action="@{/detalhesProduto}" method="post">
+                        <input type="hidden" name="codigo" th:value="${produto.codigo}" />
+                        <button id="detalhe" type="submit">Detalhe</button>
+                    </form>
+                    </td>
+                    <td>
+                        <form th:action="@{/adicionarCarrinho}" method="post">
+                        <input type="hidden" name="codigo" th:value="${produto.codigo}"/>
+                        <input type="hidden" name="nome" th:value="${produto.nome}"/>
+                        <input type="hidden" name="valor" th:value="${produto.valor}"/>
+                        <button id="Adicionar no Carrinho" type="submit">Adicionar no Carrinho</button>
+                        </form>
+                    </td>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

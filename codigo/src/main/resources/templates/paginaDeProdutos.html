@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página do Administrador - Lista de Produtos</title>
+    <link rel="stylesheet" type="text/css" href="stylePaginaOrganizacao.css">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <span>Produtos</span>
+            <div class="search-container">
+                <form th:action="@{/pesquisarProduto}" method="get">
+                    <input type="text" name="username" placeholder="Digite o nome do produto">
+                    <button type="submit">Pesquisar</button>
+                </form>
+            </div>
+            <div th:if="${session.loggedInUser}">
+                <p>Usuário logado: <span th:text="${session.loggedInUser}"></span></p>
+                <p>Usuário logado: <span th:text="${session.userType}"></span></p>
+            </div>
+            <a th:if="${session.userType != 'Estoquista'}" href="/paginaCadastroProduto"><button id="new">+</button></a>
+
+        </div>
+
+        <div class="divTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código:</th>
+                        <th>Nome:</th>
+                        <th>Quantidade:</th>
+                        <th>Valor:</th>
+                        <th>Status:</th>
+                        <th>Visualizar</th>
+                        <th class="acao">Alterar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="produto : ${produtos}" th:class="${produto.statuss == 'Inativo'} ? 'tranparent-user' : ''">
+                        <td th:text="${produto.codigo}"></td>
+                        <td th:text="${produto.nome}"></td>
+                        <td th:text="${produto.quantidade}"></td>
+                        <td>R$<span th:text="${produto.valor}"></span></td>
+                        <td>
+                            <form th:if="${produto.statuss == 'Ativo'}" th:action="@{/mudarStatusProduto}" method="post" onsubmit="return confirm('Tem certeza que deseja mudar para Ativo?')">
+                                <input type="hidden" name="codigo" th:value="${produto.codigo}" />
+                                <button class="btn-ativo" type="submit">Ativo</button>
+                            </form>
+                            <form th:if="${produto.statuss == 'Inativo'}" th:action="@{/mudarStatusProduto}" method="post" onsubmit="return confirm('Tem certeza que deseja mudar para Inativo?')">
+                                <input type="hidden" name="codigo" th:value="${produto.codigo}" />
+                                <button class="btn-inativo" type="submit">Inativo</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form th:action="@{/detalhesProduto}" method="post">
+                            <input type="hidden" name="codigo" th:value="${produto.codigo}" />
+                            <button type="submit">Detalhe</button>
+                        </form>
+                        </td>
+                        <td>
+                            <a th:href="@{/paginaAdministradorEditarProduto/{codigo}(codigo=${produto.codigo})}">Editar</a>
+                            <br><br>
+                            <a th:if="${session.userType != 'Estoquista'}" th:href="@{/paginaSelecionarImagemPrincipal/{codigo}(codigo=${produto.codigo})}">Selecionar Imagem Principal</a>
+                        </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination right-align">
+            <a th:if="${currentPage > 1}" th:href="@{/produtos(page=${currentPage - 1})}" class="pagination-link">Anterior</a>
+            <a th:if="${currentPage < totalPages}" th:href="@{/produtos(page=${currentPage + 1})}" class="pagination-link">Próxima</a>
+        </div>              
+    </div>
+    <script src="scriptPaginaDeProdutos.js"></script>
+</body>
+
+</html>

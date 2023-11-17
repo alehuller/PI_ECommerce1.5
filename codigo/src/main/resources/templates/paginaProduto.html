@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Produto</title>
+    <link href="stylePaginaProduto.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.carousel').slick({
+                arrows: true, // Adicione setas de navegação
+                autoplay: false, // Desative a reprodução automática
+                dots: true // Adicione pontos indicadores
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="menu">
+            <div class="left-side-menu">
+                <div class="logo">
+                    <i class="fa-solid fa-store"></i>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="">Tênis</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="right-side-menu">
+                <a href=""><img src="images/icon-cart.svg"></a>
+                <!--<a href="" class="icon-avatar"><img src="images/foto.jpg"></a>-->
+            </div>
+        </div>
+        <div class="line"></div>
+    </header>
+
+    <main>
+        <section>
+            <div class="container">
+                <div class="left-side">
+                    <div class="items">
+                        <div class="select-image">
+                            <div class="carousel">
+                                <div><img th:src="${imagens1[0].nomeArquivo}" alt="Imagem do Produto"></div>
+                                <div th:each="imagem, iterStat : ${imagens1}" th:if="${iterStat.index != 0}">
+                                    <img th:src="${imagem.nomeArquivo}" alt="Imagem do Produto">
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-side">
+                    <div class="content">
+                        <h1 th:text="${produto.nome}"></h1>
+                        <p th:text="${produto.descricao}"></p>
+                        <p>Avaliação:
+                            <span th:if="${produto.avaliacao == '0.5'}">&#10030;</span>
+                            <span th:if="${produto.avaliacao == '1'}">&#9733;</span>
+                            <span th:if="${produto.avaliacao == '1.5'}">&#9733;&#10030;</span>
+                            <span th:if="${produto.avaliacao == '2'}">&#9733;&#9733;</span>
+                            <span th:if="${produto.avaliacao == '2.5'}">&#9733;&#9733;&#10030;</span>
+                            <span th:if="${produto.avaliacao == '3'}">&#9733;&#9733;&#9733;</span>
+                            <span th:if="${produto.avaliacao == '3.5'}">&#9733;&#9733;&#9733;&#10030;</span>
+                            <span th:if="${produto.avaliacao == '4'}">&#9733;&#9733;&#9733;&#9733;</span>
+                            <span th:if="${produto.avaliacao == '4.5'}">&#9733;&#9733;&#9733;&#9733;&#10030;</span>
+                            <span th:if="${produto.avaliacao == '5'}">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </p>  
+                        <div class="prices">
+                            <span>R$ <span class="price" th:text="${produto.valor}"></span></span>
+                        </div>
+                    </div>
+                    <td>
+                        <form th:action="@{/adicionarCarrinho}" method="post">
+                        <input type="hidden" name="codigo" th:value="${produto.codigo}"/>
+                        <input type="hidden" name="nome" th:value="${produto.nome}"/>
+                        <input type="hidden" name="valor" th:value="${produto.valor}"/>
+                        <button id="Adicionar no Carrinho" type="submit">Adicionar no Carrinho</button>
+                        </form>
+                    </td>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

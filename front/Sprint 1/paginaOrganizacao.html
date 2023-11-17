@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página do Administrador</title>
+    <link rel="stylesheet" type="text/css" href="stylePaginaOrganizacao.css">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <span>CRUD de Usuários</span>
+            <button onClick="openModal()" id="new">Incluir</button>
+        </div>
+
+        <div class="divTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome:</th>
+                        <th>CPF:</th>
+                        <th>Email:</th>
+                        <th>Status:</th>
+                        <th>Grupo:</th>
+                        <th class="acao">Editar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modal-container">
+            <div class="modal">
+                <form>
+                    <label for="m-nome">Nome</label>
+                    <input id="m-nome" type="text" required />
+
+                    <label for="m-senha">Senha</label>
+                    <input id="m-senha" type="password" required />
+
+                    <label for="m-senhaConfirm">Senha Confirmação</label>
+                    <input id="m-senhaConfirm" type="password" required />
+
+                    <label for="m-cpf">CPF</label>
+                    <input id="m-cpf" type="text" required />
+
+                    <label for="m-email">Email</label>
+                    <input id="m-email" type="email" required />
+
+                    <label for="m-status">Status:</label>
+                    <input id="m-status" type="text" required />
+
+                    <label for="m-grupo">Grupo</label>
+                    <input id="m-grupo" type="text" required />
+
+                    <button id="btnSalvar">Salvar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="scriptPaginaOrganizacao.js"></script>
+</body>
+
+</html>

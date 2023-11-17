@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumo pedido</title>
+  <link rel="stylesheet" href="stylePaginaResumoCompra.css">
+  <script>
+    function funcao() {
+      alert("Sucesso na Compra! \n" + "Número do Pedido: 123 \n" + "Valor do Pedido: R$3899,96")
+    }
+  </script>
+</head>
+
+<body>
+  <main class="main-section">
+    <section class="container normal-section">
+      <h2 class="section-title">Resumo do Pedido</h2>
+
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th class="table-head-item first-col">Item</th>
+            <th class="table-head-item second-col">Preço</th>
+            <th class="table-head-item third-col">Quantidade</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="carrinho : ${carrinhos}">
+            <td th:text="${carrinho.nome}"></td>
+            <td th:text="${carrinho.valor}"></td>
+            <td th:text="${carrinho.quantidade}"></td>
+            <td th:text="${carrinho.valorTotal}"></td>
+          </tr>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <td colspan="3" class="cart-total-container">
+              <strong>Frete:</strong>
+              <span th:text="${carrinho.precoCEP}"></span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" class="cart-total-container">
+              <strong class="total-compra">Total:</strong>
+              <span th:text="${carrinho.precoTotal}"></span>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <br><br>
+      <h3>Endereço de Entrega:</h3>
+      <br>
+      <h3>CEP: <span th:text="${enderecoEntrega.cep}"/></h3>
+      <h3>Logradouro: <span th:text="${enderecoEntrega.logradouro}"/></h3>
+      <h3>Numero: <span th:text="${enderecoEntrega.numero}"/></h3>
+      <h3>Complemento: <span th:text="${enderecoEntrega.complemento}"/></h3>
+      <h3>Bairro: <span th:text="${enderecoEntrega.bairro}"/></h3>
+      <h3>Cidade: <span th:text="${enderecoEntrega.cidade}"/></h3>
+      <h3>UF: <span th:text="${enderecoEntrega.uf}"/></h3>
+      <br>
+      <strong>Forma de Pagamento: <span th:text="${carrinho.formaPagamento}"></span></strong>
+      <form th:action="@{/paginaResumoCompra}" method="post">
+        <button type="submit">Confirmar Pedido</button>
+    </form>
+      <a href="/paginaFormaDePagamento"><h3>Voltar</h3></a>
+    </section>
+  </main>
+</body>
+
+</html>

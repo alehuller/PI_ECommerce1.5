@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div th:each="imagem, iterStat : ${imagens1}">
+        <form th:action="@{/paginaSelecionarImagemPrincipal/{codigo}}" method="post">
+            <input type="hidden" name="codigo" th:value="${imagem.id}" />
+            <input type="hidden" name="nomeArquivo" th:value="${imagem.nomeArquivo}" />
+            <span th:text="${imagem.nomeArquivo}" />
+            <button type="submit">Principal</button>
+        </form>
+    </div>
+</body>
+</html>

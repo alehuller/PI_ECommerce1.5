@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página do Administrador</title>
+    <link rel="stylesheet" type="text/css" href="stylePaginaOrganizacao.css">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <span>Usuários</span>
+            <div class="search-container">
+                <form th:action="@{/pesquisar}" method="get">
+                    <input type="text" name="username" placeholder="Digite o nome de usuário">
+                    <button type="submit">Pesquisar</button>
+                </form>
+            </div>            
+            <div th:if="${session.loggedInUser}">
+                <!-- Conteúdo da página restrita -->
+                <p>Usuário logado: <span th:text="${session.loggedInUser}"></span></p>
+            </div>
+            <a href="/paginaCadastroCliente"><button id="new">Incluir</button></a>
+        </div>
+
+        <div class="divTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome:</th>
+                        <th>Email:</th>
+                        <th>Status:</th>
+                        <th>Grupo:</th>
+                        <th class="acao">Editar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="usuario : ${usuarios}" th:class="${usuario.statuss == 'Inativo'} ? 'tranparent-user' : ''">
+                        <td th:text="${usuario.nome}"></td>
+                        <td th:text="${usuario.email}"></td>
+                        <td>
+                            <form th:if="${usuario.statuss == 'Ativo'}" th:action="@{/mudarStatus}" method="post">
+                                <input type="hidden" name="cpf" th:value="${usuario.cpf}" />
+                                <button class="btn-ativo" type="submit">Ativo</button>
+                            </form>
+                            <form th:if="${usuario.statuss == 'Inativo'}" th:action="@{/mudarStatus}" method="post">
+                                <input type="hidden" name="cpf" th:value="${usuario.cpf}" />
+                                <button class="btn-inativo" type="submit">Inativo</button>
+                            </form>
+                        </td>
+                        
+                        <td th:text="${usuario.grupo}"></td>
+                        <!--<td><a href="@{/paginaEditarCliente(id=${usuario.id})}"><button id="new">Editar</button></a></td> @{/paginaEditarCliente(id=${usuario.id})}-->
+                        <!--<td><a href="@{/paginaEditarCliente/{id}(id=${usuario.id})}">Editar</a></td>-->
+                        <!-- dando certo<td><a href="/paginaEditarCliente"><button id="new">Editar</button></a></td>-->
+                        <td><a th:href="@{/paginaEditarCliente/{cpf}(cpf=${usuario.cpf})}">Editar</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="scriptPaginaOrganizacao.js"></script>
+</body>
+
+</html>

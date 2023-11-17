@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sneakers E-Commerce</title>
+    <link rel="stylesheet" type="text/css" href="stylePaginaCadastroCliente.css">
+</head>
+
+<body>
+    <div class="box">
+        <fieldset>
+            <legend><b>Editar produto</b></legend>
+            <h2>Dados</h2>
+            <form th:action="@{/paginaAdministradorEditarProduto/{codigo}(codigo=${produto.codigo})}" th:object="${produto}" method="post">
+                <div class="inputBox">
+                    <label class="labelInput" style="display: inline-block; margin-right: 10px;">Nome:</label>
+                    <p th:text="${produto.nome}" class="inputUser" style="display: inline-block;"></p>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <label class="labelInput" style="display: inline-block; margin-right: 10px;">Avaliação:</label>
+                    <p th:text="${produto.avaliacao}" class="inputUser" style="display: inline-block;"></p>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <label class="labelInput" style="display: inline-block; margin-right: 10px;">Descrição:</label>
+                    <p th:text="${produto.descricao}" class="inputUser" style="display: inline-block;"></p>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <label class="labelInput" style="display: inline-block; margin-right: 10px;">Preço:</label>
+                    <p th:text="${produto.valor}" class="inputUser" style="display: inline-block;"></p>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="number" name="quantidade" id="quantidade" class="inputUser" th:field="*{quantidade}" required step="1">
+                    <label class="labelInput">Quantidade</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <label class="labelInput" style="display: inline-block; margin-right: 10px;">Imagens:</label>
+                    <p th:text="${produto.imagens}" class="inputUser" style="display: inline-block;"></p>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <label class="labelInput" style="display: inline-block; margin-right: 10px;">Status:</label>
+                    <p th:text="${produto.statuss}" class="inputUser" style="display: inline-block;"></p>
+                </div>
+                <br>
+                <input type="submit" name="submit" id="submit">
+                <a href="/paginaDeProdutos">Cancelar</a>
+            </form>
+        </fieldset>
+    </div>
+</body>
+</html>

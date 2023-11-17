@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos</title>
+    <link rel="stylesheet" href="stylePaginaResumoCompra.css">
+</head>
+<body>
+    <main class="main-section">
+        <section class="container normal-section">
+          <h2 class="section-title">Pedidos</h2>
+    
+          <table class="cart-table">
+            <thead>
+              <tr>
+                <th class="table-head-item first-col">Número do Pedido</th>
+                <th class="table-head-item second-col">Data do Pedido</th>
+                <th class="table-head-item third-col">Valor Total</th>
+                <th class="table-head-item third-col">Status</th>
+                <th class="table-head-item third-col">Detalhe</th>
+              </tr>
+            </thead>
+    
+            <tbody>
+                <tr th:each="pedido : ${pedidos}">
+                    <td th:text="${pedido.id}"></td>
+                    <td th:text="${pedido.dataPedido}"></td>
+                    <td th:text="${pedido.valorTotal}"></td>
+                    <td th:text="${pedido.statuss}"></td>
+                    <td>
+                      <form th:action="@{/detalhesCompra}" method="post">
+                        <input type="hidden" name="id" th:value="${pedido.id}"/>
+                        <button id="detalheCompra" type="submit">Detalhe</button>
+                      </form>
+                    </td>
+                  </tr>
+            </tbody>
+        </section>
+      </main>
+</body>
+</html>

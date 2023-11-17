@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumo pedido</title>
+  <link rel="stylesheet" href="styleLandingPageLogado.css">
+</head>
+
+<body>
+  <main class="main-section">
+    <section class="container normal-section">
+      <h2 class="section-title">Pedido gravado com sucesso!</h2>
+
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th class="table-head-item first-col">Número do Pedido</th>
+            <th class="table-head-item second-col">Preço</th>
+          </tr>
+        </thead>
+
+        <tbody>
+            <td th:text="${pedido.id}"></td>
+            <td th:text="${pedido.valorTotal}"></td>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+
+</html>

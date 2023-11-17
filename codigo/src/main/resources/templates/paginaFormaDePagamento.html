@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="styleCheckout.css">
+</head>
+
+<body>
+    <div class="container">
+            <div class="row">
+                <form th:action="@{/paginaFormaDePagamento}" th:object="${carrinho}" method="post">
+                <div class="col">
+                    <h3 class="title">Pagamento</h3>
+                    <div class="flex">
+                        <div class="inputBox">
+                            <label class="labelInput">Forma de Pagamento</label>
+                            <select name="formaPagamento" id="formaPagamento" class="inputUser" th:field="*{formaPagamento}" required>
+                                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                <option value="Boleto">Boleto</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="inputBox">
+                        <span>Nome no cartão: </span>
+                        <input type="text" name="nomeCartao" id="nomeCartao" class="inputUser" th:field="*{nomeCartao}" placeholder="nome completo">
+                    </div>
+                    <div class="inputBox">
+                        <span>Número no Cartão: </span>
+                        <input type="text" name="numeroCartao" id="numeroCartao" class="inputUser" th:field="*{numeroCartao}" placeholder="número no cartão">
+                    </div>
+                    <div class="inputBox">
+                        <span>Data de Vencimento: </span>
+                        <input type="text" name="anoExpiracaoCartao" id="anoExpiracaoCartao" class="inputUser" th:field="*{anoExpiracaoCartao}" placeholder="data de expiração">
+                    </div>
+                    <div class="flex">
+                        <div class="inputBox">
+                            <span>CVV: </span>
+                            <input type="text" name="cvvCartao" id="cvvCartao" class="inputUser" th:field="*{cvvCartao}">
+                        </div>
+                        <div class="inputBox">
+                            <span>Parcela: </span>
+                            <input type="text" name="parcelaCartao" id="parcelaCartao" class="inputUser" th:field="*{parcelaCartao}">
+                        </div>
+                    </div>
+                    <input type="submit" name="submit" id="submit">
+                </div>
+                </form>
+            </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styleLandingPage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+</head>
+<body>
+    <div th:each="endereco, iterStat : ${enderecos}">
+        <form th:action="@{/paginaEscolhaDeEndereco}" method="post">
+            <input type="hidden" name="id" th:value="${endereco.id}" />
+            <h3>CEP:<span th:text="${endereco.cep}"/></h3>
+            <h3>Logradouro:<span th:text="${endereco.logradouro}"/></h3>
+            <h3>Numero:<span th:text="${endereco.numero}"/></h3>
+            <h3>Complemento:<span th:text="${endereco.complemento}"/></h3>
+            <h3>Bairro:<span th:text="${endereco.bairro}"/></h3>
+            <h3>Cidade:<span th:text="${endereco.cidade}"/></h3>
+            <h3>UF:<span th:text="${endereco.uf}"/></h3>
+            <button type="submit">Principal</button>
+            <br><br>
+        </form>
+    </div>
+</body>
+</html>

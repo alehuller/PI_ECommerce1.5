@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sneakers E-Commerce</title>
+    <link rel="stylesheet" type="text/css" href="stylePaginaCadastroCliente.css">
+</head>
+
+<body>
+    <div class="box">
+        <fieldset>
+            <legend><b>Alterar dados</b></legend>
+            <h2>Dados</h2>
+            <form th:action="@{/paginaAlterarDadosCliente}" th:object=${cliente} method="post">
+                <div class="inputBox">
+                    <input type="text" name="nome" id="nome" class="inputUser" th:field="*{nome}" required>
+                    <label class="labelInput">Nome completo</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="text" name="senha" id="senha" class="inputUser" th:field="*{senha}" required>
+                    <label class="labelInput">Senha</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="text" name="dataNascimento" id="dataNascimento" class="inputUser" th:field="*{dataNascimento}" required>
+                    <label class="labelInput">Data de Nascimento</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="text" name="genero" id="genero" class="inputUser" th:field="*{genero}" required>
+                    <label class="labelInput">Gênero</label>
+                </div>
+                <br>
+                <input type="submit" name="submit" id="submit">
+            </form>
+        </fieldset>
+    </div>
+</body>
+</html>

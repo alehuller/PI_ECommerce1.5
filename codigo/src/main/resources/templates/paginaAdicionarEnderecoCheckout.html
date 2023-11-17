@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sneakers E-Commerce</title>
+    <link rel="stylesheet" type="text/css" href="stylePaginaCadastroCliente.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#cep").blur(function () {
+                var cep = $(this).val().replace(/\D/g, ''); // Remove caracteres não numéricos
+
+                if (cep.length === 8) {
+                    $.getJSON("https://viacep.com.br/ws/" + cep + "/json/", function (data) {
+                        if (!("erro" in data)) {
+                            $("#logradouro").val(data.logradouro);
+                            $("#bairro").val(data.bairro);
+                            $("#cidade").val(data.localidade);
+                            $("#uf").val(data.uf);
+                        }
+                    });
+                }
+            });
+        });
+
+        function validateForm() {
+            // Coloque aqui sua lógica de validação, se necessário
+            return true; // Retorne true se a validação for bem-sucedida
+        }
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <fieldset>
+            <legend><b>Cadastro Endereço de Entrega</b></legend>
+            <h2>Dados</h2>
+            <form th:action="@{/paginaAdicionarEnderecoCheckout}" th:object="${enderecoEntrega}" method="post" onsubmit="return validateForm();">
+                <div class="inputBox">
+                    <input type="number" name="cep" id="cep" class="inputUser" th:field="*{cep}" required>
+                    <label class="labelInput">CEP</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="text" name="logradouro" id="logradouro" class="inputUser" th:field="*{logradouro}" required>
+                    <label class="labelInput">Logradouro</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="number" name="numero" id="numero" class="inputUser" th:field="*{numero}" required>
+                    <label class "labelInput">Número</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="text" name="complemento" id="complemento" class="inputUser" th:field="*{complemento}" required>
+                    <label class="labelInput">Complemento</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="text" name="bairro" id="bairro" class="inputUser" th:field="*{bairro}" required>
+                    <label class="labelInput">Bairro</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="text" name="cidade" id="cidade" class="inputUser" th:field="*{cidade}" required>
+                    <label class="labelInput">Cidade</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="text" name="uf" id="uf" class="inputUser" th:field="*{uf}" required>
+                    <label class="labelInput">UF</label>
+                </div>
+                <br>
+                <input type="submit" name="submit" id="submit">
+            </form>
+        </fieldset>
+    </div>
+</body>
+</html>

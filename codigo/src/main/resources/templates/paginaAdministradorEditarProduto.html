@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sneakers E-Commerce</title>
+    <link rel="stylesheet" type="text/css" href="stylePaginaCadastroCliente.css">
+    <script>
+        // Aguarde o DOM ser carregado antes de executar o script
+        document.addEventListener('DOMContentLoaded', function () {
+            // Referência ao elemento de entrada de quantidade de imagens
+            const quantidadeInput = document.getElementById('quantidadeImagens');
+
+            // Referência ao contêiner onde os campos de entrada de imagens serão adicionados
+            const imagensContainer = document.getElementById('imagensContainer');
+
+            // Adicione um ouvinte de eventos para detectar alterações na entrada de quantidade
+            quantidadeInput.addEventListener('input', () => {
+                // Limpe o contêiner de imagens
+                imagensContainer.innerHTML = '';
+
+                // Obtenha o valor da entrada de quantidade
+                const quantidade = parseInt(quantidadeInput.value);
+
+                // Crie campos de entrada de imagens com base na quantidade
+                for (let i = 0; i < quantidade; i++) {
+                    const inputBox = document.createElement('div');
+                    inputBox.classList.add('inputBox');
+                    inputBox.innerHTML = `
+                        <input type="file" name="imagens" class="inputUser" required>
+                        <label class="labelInput">Imagem ${i + 1}:</label>
+                        <select name="imagemPrincipal" class="inputUser">
+                            <option value="false">Não Principal</option>
+                            <option value="true">Principal</option>
+                        </select>
+                    `;
+                    imagensContainer.appendChild(inputBox);
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <fieldset>
+            <legend><b>Editar produto</b></legend>
+            <h2>Dados</h2>
+            <form th:action="@{/paginaAdministradorEditarProduto/{codigo}(codigo=${produto.codigo})}" th:object="${produto}" method="post">
+                <div class="inputBox">
+                    <input type="text" name="nome" id="nome" class="inputUser" th:field="*{nome}" required>
+                    <label class="labelInput">Nome do Produto</label>
+                    <label>(Suporta no máximo 200 caracteres)</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <select name="avaliacao" id="avaliacao" class="inputUser" th:field="*{avaliacao}" required>
+                        <option value="0.5">0.5</option>
+                        <option value="1">1</option>
+                        <option value="1.5">1.5</option>
+                        <option value="2">2</option>
+                        <option value="2.5">2.5</option>
+                        <option value="3">3</option>
+                        <option value="3.5">3.5</option>
+                        <option value="4">4</option>
+                        <option value="4.5">4.5</option>
+                        <option value="5">5</option>
+                    </select>
+                    <label class="labelInput">Avaliação</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="text" name="descricao" id="descricao" class="inputUser" th:field="*{descricao}" required>
+                    <label class="labelInput">Descrição</label>
+                    <label>(Suporta no máximo 2000 caracteres)</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="text" name="preco" id="preco" class="inputUser" th:field="*{valor}" required>
+                    <label class="labelInput">Preço</label>
+                    <label>(Exemplo a ser seguido: 150,99)</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="number" name="quantidade" id="quantidade" class="inputUser" th:field="*{quantidade}" required step="1">
+                    <label class="labelInput">Quantidade</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <label for="quantidadeImagens" class="labelInput">Quantidade de Imagens:</label>
+                    <input type="number" id="quantidadeImagens" min="0" max="50" step="1">
+                </div>
+                <div id="imagensContainer">
+                    <!-- Os campos de entrada de imagens serão adicionados aqui -->
+                </div>
+                <div class="inputBox">
+                    <input type="file" name="imagens" id="imagens" class="inputUser" th:field="*{imagens}" required multiple>
+                    <label class="labelInput">Imagens</label>
+                </div>
+                <div class="inputBox">
+                    <label class="labelInput" style="display: inline-block; margin-right: 10px;">Imagens:</label>
+                    <p th:text="${produto.imagens}" class="inputUser" style="display: inline-block;"></p>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <label class="labelInput" style="display: inline-block; margin-right: 10px;">Status:</label>
+                    <p th:text="${produto.statuss}" class="inputUser" style="display: inline-block;"></p>
+                </div>
+                <br>
+                <input type="submit" name="submit" id="submit">
+                <a href="/paginaDeProdutos">Cancelar</a>
+            </form>
+        </fieldset>
+    </div>
+</body>
+
+</html>

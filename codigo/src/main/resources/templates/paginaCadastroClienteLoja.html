@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sneakers E-Commerce</title>
+    <link rel="stylesheet" type="text/css" href="stylePaginaCadastroCliente.css">
+    <script>
+        function validateForm() {
+            var senha = document.getElementById("senha").value;
+            var confirmarSenha = document.getElementById("confirmarSenha").value;
+
+            if (senha !== confirmarSenha) {
+                alert("As senhas não coincidem. Por favor, digite novamente.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <fieldset>
+            <legend><b>Cadastro cliente</b></legend>
+            <h2>Dados</h2>
+            <form th:action="@{/paginaCadastroClienteLoja}" th:object="${cliente}" method="post" onsubmit="return validateForm();">
+                <div class="inputBox">
+                    <input type="text" name="nome" id="nome" class="inputUser" th:field="*{nome}" required>
+                    <label class="labelInput">Nome completo</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="password" name="senha" id="senha" class="inputUser" th:field="*{senha}" required>
+                    <label class="labelInput">Senha</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="password" name="confirmarSenha" id="confirmarSenha" class="inputUser" required>
+                    <label class="labelInput">Confirme a senha</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="number" name="cpf" id="cpf" class="inputUser" th:field="*{cpf}" required>
+                    <label class="labelInput">CPF</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="text" name="email" id="email" class="inputUser" th:field="*{email}" required>
+                    <label class="labelInput">Email</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="text" nome="dataNascimento" id="dataNascimento" class="inputUser" th:field="*{dataNascimento}" required>
+                    <label class="labelInput">Data de Nascimento</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="text" nome="genero" id="genero" class="inputUser" th:field="*{genero}" required>
+                    <label class="labelInput">Gênero</label>
+                </div>
+                <br>
+                <input type="submit" name="submit" id="submit">
+            </form>
+        </fieldset>
+    </div>
+</body>
+</html>

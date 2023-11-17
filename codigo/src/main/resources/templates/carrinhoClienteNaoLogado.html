@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrinho</title>
+  <link rel="stylesheet" href="styleCarrinhoClienteNaoLogado.css">
+</head>
+
+<body>
+  <main class="main-section">
+    <section class="container normal-section">
+      <h2 class="section-title">Carrinho</h2>
+
+      <table class="cart-table">    
+        <thead>
+          <tr>
+            <th>Nome do Produto</th>
+            <th>Preço</th>
+            <th> </th>
+            <th>Quantidade</th>
+            <th> </th>
+            <th>Total Produto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="carrinho : ${carrinhos}">
+            <td th:text="${carrinho.nome}"></td>
+            <td th:text="${carrinho.valor}"></td>
+            <td>
+              <form th:action="@{/removerQuantidade}" method="post">
+                <input type="hidden" name="produtoId" th:value="${carrinho.produtoId}"/>
+                <input type="hidden" name="quantidade" th:value="${carrinho.quantidade}"/>
+                <input type="hidden" name="valor" th:value="${carrinho.valor}"/>
+                <button id="Remover quantidade" type="submit"><</button>
+              </form>
+            </td>
+            <td th:text="${carrinho.quantidade}"></td>
+            <td>
+              <form th:action="@{/adicionarQuantidade}" method="post">
+                <input type="hidden" name="produtoId" th:value="${carrinho.produtoId}"/>
+                <input type="hidden" name="quantidade" th:value="${carrinho.quantidade}"/>
+                <input type="hidden" name="valor" th:value="${carrinho.valor}"/>
+                <button id="Adicionar quantidade" type="submit">></button>
+              </form>
+            </td>
+            <td th:text="${carrinho.valorTotal}"></td>
+            <td>
+              <form th:action="@{/removerProduto}" method="post">
+                <input type="hidden" name="produtoId" th:value="${carrinho.produtoId}"/>
+                <button id="Remover Produto" type="submit">Remover</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <td colspan="3" class="cart-total-container">
+              <strong>Total</strong>
+              <span th:text="${carrinho.precoTotal}"></span>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <div class="escolher-endereco">
+        <br>
+        <div class="input-box">
+          <label for="cep" class="labelInput">CEP:</label>
+          <input id="cep" type="number" name="cep" placeholder="Digite o CEP">
+          <form th:action="@{/cep1}" method="post">
+            <input type="hidden" name="preco" value="5,00"/>
+            <label for="frete1">receba até 16 de maio - R$5,00</label>
+            <button id="cep" type="submit">.</button>
+          </form>
+        <form th:action="@{/cep2}" method="post">
+          <input type="hidden" name="preco" value="10,00"/>
+          <label for="frete1">receba até 24 de maio - R$10,00</label>
+          <button id="cep" type="submit">.</button>
+        </form>
+        <form th:action="@{/cep3}" method="post">
+          <input type="hidden" name="preco" value="15,00"/>
+          <label for="frete1">receba até 28 de maio - R$15,00</label>
+          <button id="cep" type="submit">.</button>
+        </form>
+        </div>
+      </div>
+      <a th:href="${session.loggedInUser} ? '/paginaEndereco' : 'paginaLoginCliente'">
+        <span th:if="${session.loggedInUser}">Finalizar Compra</span>
+                        <span th:unless="${session.loggedInUser}">Finaliza Compra</span>
+      </a>
+    </section>
+  </main>
+</body>
+</html>
