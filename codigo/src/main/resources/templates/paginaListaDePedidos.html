@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página do Administrador - Lista de Produtos</title>
+    <link rel="stylesheet" type="text/css" href="stylePaginaOrganizacao.css">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <span>Produtos</span>
+            <div th:if="${session.loggedInUser}">
+                <p>Usuário logado: <span th:text="${session.loggedInUser}"></span></p>
+                <p>Usuário logado: <span th:text="${session.userType}"></span></p>
+            </div>
+        </div>
+
+        <div class="divTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data do Pedido:</th>
+                        <th>Número do Pedido:</th>
+                        <th>Valor Total:</th>
+                        <th>Status:</th>
+                        <th>Editar:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="pedido : ${pedidos}">
+                        <td th:text="${pedido.dataPedido}"></td>
+                        <td th:text="${pedido.id}"></td>
+                        <td th:text="${pedido.valorTotal}"></td>
+                        <td th:text="${pedido.statuss}"></td>
+                        <td>
+                        <form th:action="@{/alterarStatus}" method="post">
+                            <select id="statusPedido" name="statusPedido">
+                            <option value="Aguardando Pagamento">Aguardando Pagamento</option>
+                            <option value="Pagamento Rejeitado">Pagamento Rejeitado</option>
+                            <option value="Pagamento com Sucesso">Pagamento com Sucesso</option>
+                            <option value="Aguardando Retirada">Aguardando Retirada</option>
+                            <option value="Em Trânsito">Em Trânsito</option>
+                            <option value="Entregue">Entregue</option>
+                            </select>
+                            <input type="hidden" name="codigo" th:value="${pedido.id}">
+                            <button type="submit">Alterar</button>
+                        </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>          
+    </div>
+    <script src="scriptPaginaDeProdutos.js"></script>
+</body>
+
+</html>

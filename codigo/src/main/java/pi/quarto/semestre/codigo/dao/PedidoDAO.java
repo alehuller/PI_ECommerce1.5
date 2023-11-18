@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import pi.quarto.semestre.codigo.model.CarrinhoAllDto;
 import pi.quarto.semestre.codigo.model.EnderecoEntregaAllDto;
 import pi.quarto.semestre.codigo.model.Pedido;
 import pi.quarto.semestre.codigo.model.PedidoAllDto;
+import pi.quarto.semestre.codigo.model.ProdutoAllDto;
+import pi.quarto.semestre.codigo.model.UsuarioAllDto;
 
 public class PedidoDAO {
 
@@ -113,5 +116,48 @@ public class PedidoDAO {
         }
     }
 }
+    }
+
+    public List<PedidoAllDto> findAll() throws SQLException{
+        try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            String sql = "SELECT * FROM pedido ORDER BY dataPedido DESC;";
+            try (Statement stm = con.createStatement();
+                 ResultSet rs = stm.executeQuery(sql)) {
+                
+                List<PedidoAllDto> listAll = new ArrayList<PedidoAllDto>();
+
+                while (rs.next()) {
+                    PedidoAllDto pedido = new PedidoAllDto();
+                    pedido.setId(rs.getLong("id"));
+                    pedido.setClienteEmail(rs.getString("clienteEmail"));
+                    pedido.setDataPedido(rs.getString("dataPedido"));
+                    pedido.setValorTotal(rs.getString("valorTotal"));
+                    pedido.setStatuss(rs.getString("statuss"));
+                    pedido.setFormaPagamento(rs.getString("formaPagamento"));
+                    pedido.setFrete(rs.getString("frete"));
+                    pedido.setCep(rs.getString("cep"));
+                    pedido.setLogradouro(rs.getString("logradouro"));
+                    pedido.setNumero(rs.getString("numero"));
+                    pedido.setComplemento(rs.getString("complemento"));
+                    pedido.setBairro(rs.getString("bairro"));
+                    pedido.setCidade(rs.getString("cidade"));
+                    pedido.setUf(rs.getString("uf"));
+
+                    listAll.add(pedido);
+                }
+
+                return listAll;
+            }
+        }
+    }
+
+    public void alterarStatus(Long id, String statusPedido) throws SQLException{
+        var con = DriverManager.getConnection(URL, USER, PASSWORD);
+        var ps = con.prepareStatement("UPDATE pedido SET statuss = ? where id = ?");
+        ps.setString(1, statusPedido);
+        ps.setLong(2, id);
+        ps.execute();
+        con.close();
+
     }
 }
